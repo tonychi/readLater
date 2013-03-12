@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ item.title }}</h1>
+<p>Author: {{ item.author }} Date: {{ item.insertTime }}</p>
+<p>Url: {{ item.url }}</p>
+<hr />
+<div>
+    {{ item.content }}
+</div>
+{% endblock content %}

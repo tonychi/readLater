@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>List</h1>
+<hr />
+<div class="pager">
+    <a href="#">Newer</a>
+    <a href="#">Older</a>
+</div>
+<div class="list">
+    {% for it in items %}
+    <div class="item">
+        <p>
+            <span><a href="/view/{{ it.id }}">{{ it.title }}</a></span>
+            <span class="author">{{ it.author }}</span>
+            <span class="time">{{ it.insertTime }}</span>
+            <span class="action">
+                <a class="action_kindle" href="#">Send to kindle</a>
+            </span>
+        </p>
+        <p>原始地址:<a href="{{ it.url }}" target="_blank">{{ it.url }}</a></p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}
