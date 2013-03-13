@@ -1,0 +1,7 @@
+{
+	"name": "Send2Kindle",
+	"description": "Send to Kindle",
+	"version": "0.1",
+	"background_page": "background.html",
+	"permissions": [ "tabs", "notifications" ]
+}
