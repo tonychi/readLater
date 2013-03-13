@@ -22,6 +22,7 @@ class BaseHandler(webapp2.RequestHandler):
         """ direct wirte to out stream """
         self.response.out.write(template(view, data, args))
 
+# /
 class MainHandler(BaseHandler):
     """ all pages using pageit """
 
@@ -31,6 +32,7 @@ class MainHandler(BaseHandler):
         its = q.fetch(10, 0)
         render_template('index.html', { 'title': 'List', 'items': its })
 
+# /view/([\d]+)
 class ViewHandler(BaseHandler):
     """ per page """
 
@@ -39,6 +41,7 @@ class ViewHandler(BaseHandler):
         p = db.get(db.Key.from_path('Page', itId))
         render_template('view.html', { 'title': p.title, 'item': p })
 
+# /delete/([\d]+)
 class DeleteHandler(BaseHandler):
     """ delete page """
 
@@ -48,6 +51,7 @@ class DeleteHandler(BaseHandler):
         db.delete(p)
         return webapp2.redirect('/')
 
+# /send/([\d]+)
 class SendHandler(BaseHandler):
     """ send already exist item """
 
@@ -68,6 +72,7 @@ class SendHandler(BaseHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write('{ successed:true, id:%s }' % p.key().id())
 
+# /save
 class SendDirectHandler(SendHandler):
     """ receive save request, and send mail to it """
 
@@ -85,6 +90,8 @@ class SendDirectHandler(SendHandler):
             response.headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
             response.headers['Access-Control-Max-Age'] = '1000'
             response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+
+    def get(self):
 
     def post(self):
         #表单字段： url, author, title, content, allow_sendto_kindle

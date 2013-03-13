@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Save</h1>
+<hr />
+<form id="save_form" action="/save" accept-charset="utf-8">
+	<p>
+		<label for="tUrl">Url:</label>
+		<input id="tUrl" type="text" value="" placeholder="http://example.com/test.html"/>
+	</p>
+	<p>
+		<label for="tTitle">Title:</label>
+		<input id="tTitle" type="text" value="" placeholder="example title"/>
+	</p>
+	<p>
+		<label for="tAuthor">Author:</label>
+		<input id="tAuthor" type="text" value="" placeholder="author name or site url"/>
+	</p>
+	<p>
+		<label for="tTags">Tags:</label>
+		<input id="tTags" type="text" value="" placeholder="Tags, ex: Tag1, Tag2, Tag3"/>
+	</p>
+	<p>
+		<label for="tContent">Tags:</label>
+		<textarea id="tContent" rows="10" placeholder="Tags, ex: Tag1, Tag2, Tag3"></textarea>
+	</p>
+	<input id="bSubmit" type="submit" value="Save it!" />
+</form>
+{% endblock content %}
