@@ -1,0 +1,20 @@
+
+CROSS DOMAIN
+===================
+
+http://stackoverflow.com/questions/298745/how-do-i-send-a-cross-domain-post-request-via-javascript#answer-7605119
+http://wuyuntao.blogspot.com/2008/12/jquery-douban-greasemonkey.html
+http://webapp-improved.appspot.com/guide/request.html?highlight=header
+http://www.codeotaku.com/journal/2011-05/cross-domain-ajax/index#1
+http://www.firefox.net.cn/dig/api/gm_xmlhttprequest.html
+
+server side, python code:
+
+    def options(self):
+    	h = self.request.headers['HTTP_ORIGIN']
+    	if h == 'http://getpocket.com' or h == 'https://getpocket.com':
+    		response.headers['Access-Control-Allow-Origin'] = self.request.headers['HTTP_ORIGIN']
+    		response.headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
+    		response.headers['Access-Control-Max-Age'] = '1000'
+    		response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+

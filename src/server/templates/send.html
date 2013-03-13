@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+<link rel="stylesheet" type="text/css" href="../static/styles/main.css">
 <h1>Save</h1>
 <hr />
 <form id="save_form" action="/save" accept-charset="utf-8">
@@ -20,9 +21,29 @@
 		<input id="tTags" type="text" value="" placeholder="Tags, ex: Tag1, Tag2, Tag3"/>
 	</p>
 	<p>
-		<label for="tContent">Tags:</label>
-		<textarea id="tContent" rows="10" placeholder="Tags, ex: Tag1, Tag2, Tag3"></textarea>
+		<label for="tContent">Contents: (Allow Markdown)</label>
+		<textarea id="tContent" cols="50" rows="10" placeholder="Input you want to saved."></textarea>
+	</p>
+	<p>
+		<label style="display:inline-block;"><input id="bSendIt" type="checkbox" />Send it to Kindle</label>
+		<div id="kindle_mail" style="margin-left:15px; display:none;">
+			<label for="tMail">Your mail address: <input id="tMail" type="text" placeholder="xxxx@example.com" ></label>
+		</div>
 	</p>
 	<input id="bSubmit" type="submit" value="Save it!" />
 </form>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#bSendIt').click(function(){
+			/*
+			$('#kindle_mail').toggle();
+			*/
+			if(this.checked)
+				$('#kindle_mail').show();
+			else
+				$('#kindle_mail').hide();
+		});
+	});
+</script>
 {% endblock content %}

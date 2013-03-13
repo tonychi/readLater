@@ -63,7 +63,7 @@ class SendHandler(BaseHandler):
         msg.attachments = [(filename, html)]
         msg.send()
 
-    def get(self, pid):
+    def post(self, pid):
         itId = int(pid)
         p = db.get(db.Key.from_path('Page', itId))
 
@@ -74,36 +74,29 @@ class SendHandler(BaseHandler):
 
 # /save
 class SendDirectHandler(SendHandler):
-    """ receive save request, and send mail to it """
-
-    def options(self):
-    """
-    http://stackoverflow.com/questions/298745/how-do-i-send-a-cross-domain-post-request-via-javascript#answer-7605119
-    http://wuyuntao.blogspot.com/2008/12/jquery-douban-greasemonkey.html
-    http://webapp-improved.appspot.com/guide/request.html?highlight=header
-    http://www.codeotaku.com/journal/2011-05/cross-domain-ajax/index#1
-    http://www.firefox.net.cn/dig/api/gm_xmlhttprequest.html
-    """
-        h = self.request.headers['HTTP_ORIGIN']
-        if h == 'http://getpocket.com' or h == 'https://getpocket.com':
-            response.headers['Access-Control-Allow-Origin'] = self.request.headers['HTTP_ORIGIN']
-            response.headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
-            response.headers['Access-Control-Max-Age'] = '1000'
-            response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
-
-    def get(self):
+    """ receive save request, and send mail to it 
+	get请求返回send.html页面，包含提交表单。可以作为公布给终端用户的UI
+	post请求支持保存和发送两个操作，如果用户勾选了同时发送到kindle的话会自动发送出去 
+	"""
+	
+	def get(self):
+		""" render send.html """
+		render_template('send.html', { 'title': 'Send' })
 
     def post(self):
         #表单字段： url, author, title, content, allow_sendto_kindle
-        b = self.request.get('allow_sendto_kindle')
-        p = Page(url = self.request.get('url'), 
-                 author = self.request.get('author'),
-                 title = self.request.get('title'),
-                 content = self.request.get('content'))
+        bSendIt = self.request.get('bSendIt')
+        p = Page(url = self.request.get('tUrl'), 
+                 author = self.request.get('tAuthor'),
+                 title = self.request.get('tTitle'),
+                 content = self.request.get('tContent'),
+				 tags = self.request.get('tTags'))
         p.put(); # save
 
         # send to kindle
-        if b: sendIt('convert', 'qiwei219_72@kindle.com', p)
+        if bSendIt: 
+			mail = self.request.get('tMail')
+			sendIt('convert', mail, p)
 
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write('{ successed:true, id:%s }' % p.key().id())
