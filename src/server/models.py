@@ -7,5 +7,6 @@ class Page(db.Model):
     url = db.LinkProperty()
     title = db.StringProperty()
     content = db.TextProperty()
+    tags = db.StringListProperty()
     insertTime = db.DateTimeProperty(auto_now_add=True)
 

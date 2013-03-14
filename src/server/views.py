@@ -14,14 +14,14 @@ jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(TEMPLATE_DIR))
 class BaseHandler(webapp2.RequestHandler):
     """ define template method, use jinja2 """
 
-    def template(self, view, values, **args):
+    def template(self, view, values):
         """ return string """
         tpl = jinja_env.get_template(view)
         return tpl.render(values)
 
-    def render_template(self, view, data, **args):
+    def render_template(self, view, data):
         """ direct wirte to out stream """
-        self.response.out.write(template(view, data, args))
+        self.response.out.write(self.template(view, data))
 
 # /
 class MainHandler(BaseHandler):
@@ -31,7 +31,7 @@ class MainHandler(BaseHandler):
         q = Page.all();
         q.order('-insertTime')
         its = q.fetch(10, 0)
-        render_template('index.html', { 'title': 'List', 'items': its })
+        self.render_template('index.html', { 'title': 'List', 'items': its })
 
 # /view/([\d]+)
 class ViewHandler(BaseHandler):
@@ -40,7 +40,7 @@ class ViewHandler(BaseHandler):
     def get(self, pid):
         itId = int(pid)
         p = db.get(db.Key.from_path('Page', itId))
-        render_template('view.html', { 'title': p.title, 'item': p })
+        self.render_template('view.html', { 'title': p.title, 'item': p })
 
 # /delete/([\d]+)
 class DeleteHandler(BaseHandler):
@@ -68,7 +68,7 @@ class SendHandler(BaseHandler):
         itId = int(pid)
         p = db.get(db.Key.from_path('Page', itId))
 
-        sendIt('convert', 'qiwei219_72@kindle.com')
+        self.sendIt('convert', 'qiwei219_72@kindle.com', p)
 
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write('{ successed:true, id:%s }' % p.key().id())
@@ -82,22 +82,24 @@ class SendDirectHandler(SendHandler):
 
     def get(self):
         """ render send.html """
-        render_template('send.html', { 'title': 'Send' })
+        self.render_template('send.html', { 'title': 'Save' })
 
     def post(self):
         #表单字段： url, author, title, content, allow_sendto_kindle
         bSendIt = self.request.get('bSendIt')
-        p = Page(url = self.request.get('tUrl'), 
-            author = self.request.get('tAuthor'),
-            title = self.request.get('tTitle'),
-            content = self.request.get('tContent'),
-            tags = self.request.get('tTags'))
+
+        p = Page()
+        p.url = self.request.get('tUrl')
+        p.author = self.request.get('tAuthor')
+        p.title = self.request.get('tTitle')
+        p.content = self.request.get('tContent')
+        p.tags = self.request.get('tTags').split(',')
         p.put(); # save
 
         #send to kindle
         if bSendIt: 
             mail = self.request.get('tMail')
-            sendIt('convert', mail, p)
+            self.sendIt('convert', mail, p)
 
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write('{ successed:true, id:%s }' % p.key().id())

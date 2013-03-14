@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% block header %}
+{% endblock header %}
 {% block content %}
 <h1>{{ item.title }}</h1>
 <p>Author: {{ item.author }} Date: {{ item.insertTime }}</p>
@@ -8,3 +10,5 @@
     {{ item.content }}
 </div>
 {% endblock content %}
+{% block footer %}
+{% endblock footer %}
