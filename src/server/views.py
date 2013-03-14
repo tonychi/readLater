@@ -93,11 +93,11 @@ class SendDirectHandler(SendHandler):
 			tags = self.request.get('tTags'))
 		p.put(); # save
 
-	# send to kindle
-	if bSendIt: 
-		mail = self.request.get('tMail')
-		sendIt('convert', mail, p)
+		# send to kindle
+		if bSendIt: 
+			mail = self.request.get('tMail')
+			sendIt('convert', mail, p)
 
-	self.response.headers['Content-Type'] = 'application/json'
-	self.response.out.write('{ successed:true, id:%s }' % p.key().id())
+		self.response.headers['Content-Type'] = 'application/json'
+		self.response.out.write('{ successed:true, id:%s }' % p.key().id())
 
