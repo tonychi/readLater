@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding=utf-8 -*-
+# Last Change:  2013-03-14 10:51:56
 
 import os
 import webapp2
@@ -74,30 +75,30 @@ class SendHandler(BaseHandler):
 
 # /save
 class SendDirectHandler(SendHandler):
-	""" receive save request, and send mail to it 
-	get请求返回send.html页面，包含提交表单。可以作为公布给终端用户的UI
-	post请求支持保存和发送两个操作，如果用户勾选了同时发送到kindle的话会自动发送出去 
-	"""
+    """ receive save request, and send mail to it 
+    get请求返回send.html页面，包含提交表单。可以作为公布给终端用户的UI
+    post请求支持保存和发送两个操作，如果用户勾选了同时发送到kindle的话会自动发送出去 
+    """
 
-	def get(self):
-		""" render send.html """
-		render_template('send.html', { 'title': 'Send' })
+    def get(self):
+        """ render send.html """
+        render_template('send.html', { 'title': 'Send' })
 
-	def post(self):
-		#表单字段： url, author, title, content, allow_sendto_kindle
-		bSendIt = self.request.get('bSendIt')
-		p = Page(url = self.request.get('tUrl'), 
-			author = self.request.get('tAuthor'),
-			title = self.request.get('tTitle'),
-			content = self.request.get('tContent'),
-			tags = self.request.get('tTags'))
-		p.put(); # save
+    def post(self):
+        #表单字段： url, author, title, content, allow_sendto_kindle
+        bSendIt = self.request.get('bSendIt')
+        p = Page(url = self.request.get('tUrl'), 
+            author = self.request.get('tAuthor'),
+            title = self.request.get('tTitle'),
+            content = self.request.get('tContent'),
+            tags = self.request.get('tTags'))
+        p.put(); # save
 
-		# send to kindle
-		if bSendIt: 
-			mail = self.request.get('tMail')
-			sendIt('convert', mail, p)
+        #send to kindle
+        if bSendIt: 
+            mail = self.request.get('tMail')
+            sendIt('convert', mail, p)
 
-		self.response.headers['Content-Type'] = 'application/json'
-		self.response.out.write('{ successed:true, id:%s }' % p.key().id())
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write('{ successed:true, id:%s }' % p.key().id())
 
