@@ -4,11 +4,15 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>{{ title }} - Read Later</title>
 		<link rel="stylesheet" type="text/css" href="styles/main.css"> 
+            {% block header %}
+            {% endblock header %}
     </head>
     <body>
         <div>
             {% block content %}
             {% endblock content %}
         </div>
+            {% block footer %}
+            {% endblock footer %}
     </body>
 </html>

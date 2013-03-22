@@ -1,37 +1,40 @@
 {% extends "base.html" %}
+{% block header %}
+{% endblock header %}
 {% block content %}
-<link rel="stylesheet" type="text/css" href="../static/styles/main.css">
 <h1>Save</h1>
 <hr />
-<form id="save_form" action="/save" accept-charset="utf-8">
+<form id="save_form" action="/save" method="POST" accept-charset="utf-8">
 	<p>
 		<label for="tUrl">Url:</label>
-		<input id="tUrl" type="text" value="" placeholder="http://example.com/test.html"/>
+		<input id="tUrl" name="tUrl" type="text" value="" placeholder="http://example.com/test.html"/>
 	</p>
 	<p>
 		<label for="tTitle">Title:</label>
-		<input id="tTitle" type="text" value="" placeholder="example title"/>
+		<input id="tTitle" name="tTitle" type="text" value="" placeholder="example title"/>
 	</p>
 	<p>
 		<label for="tAuthor">Author:</label>
-		<input id="tAuthor" type="text" value="" placeholder="author name or site url"/>
+		<input id="tAuthor" name="tAuthor" type="text" value="" placeholder="author name or site url"/>
 	</p>
 	<p>
 		<label for="tTags">Tags:</label>
-		<input id="tTags" type="text" value="" placeholder="Tags, ex: Tag1, Tag2, Tag3"/>
+		<input id="tTags" name="tTags" type="text" value="" placeholder="Tags, ex: Tag1, Tag2, Tag3"/>
 	</p>
 	<p>
 		<label for="tContent">Contents: (Allow Markdown)</label>
-		<textarea id="tContent" cols="50" rows="10" placeholder="Input you want to saved."></textarea>
+		<textarea id="tContent" name="tContent" cols="50" rows="5" placeholder="Input you want to saved."></textarea>
 	</p>
 	<p>
-		<label style="display:inline-block;"><input id="bSendIt" type="checkbox" />Send it to Kindle</label>
+		<label style="display:inline-block;"><input id="bSendIt" name="bSendIt" type="checkbox" />Send it to Kindle</label>
 		<div id="kindle_mail" style="margin-left:15px; display:none;">
-			<label for="tMail">Your mail address: <input id="tMail" type="text" placeholder="xxxx@example.com" ></label>
+			<label for="tMail">Your mail address: <input id="tMail" name="tMail" type="text" placeholder="xxxx@example.com" ></label>
 		</div>
 	</p>
-	<input id="bSubmit" type="submit" value="Save it!" />
+	<input id="bSubmit" name="bSubmit" type="submit" value="Save it!" />
 </form>
+{% endblock content %}
+{% block footer %}
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -40,4 +43,4 @@
 		});
 	});
 </script>
-{% endblock content %}
+{% endblock footer %}
