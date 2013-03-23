@@ -86,7 +86,7 @@ class SendDirectHandler(SendHandler):
 
     def get(self):
         """ render send.html """
-        self.render_template('send.html', { 'title': 'Save' })
+        self.render_template('save.html', { 'title': 'Save' })
 
     def post(self):
         #表单字段： url, author, title, content, allow_sendto_kindle
