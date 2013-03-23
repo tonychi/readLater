@@ -2,12 +2,14 @@
 {% block header %}
 {% endblock header %}
 {% block content %}
-<h1>{{ item.title }}</h1>
-<p>Author: {{ item.author }} Date: {{ item.insertTime }}</p>
-<p>Url: {{ item.url }}</p>
-<hr />
 <div>
+    <p>{{ item.author }} | {{ item.insertTime|datetime }} | {{ item.url }}</p>
+</div>
+<div>
+    <br/>
     {{ item.content }}
+    <br/>
+    <br/>
 </div>
 {% endblock content %}
 {% block footer %}

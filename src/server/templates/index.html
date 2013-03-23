@@ -2,26 +2,36 @@
 {% block header %}
 {% endblock header %}
 {% block content %}
-<h1>List</h1>
-<hr />
-<div class="pager">
-    <a href="#">Newer</a>
-    <a href="#">Older</a>
+<div class="toolbar">
+    <p><a href="/save">Add new page</a></p>
 </div>
 <div class="list">
     {% for it in items %}
     <div class="item">
-        <p>
-            <span><a href="/view/{{ it.id }}">{{ it.title }}</a></span>
-            <span class="author">{{ it.author }}</span>
-            <span class="time">{{ it.insertTime }}</span>
+        <div>
+            <a href="/view/{{ it.key().id() }}">{{ it.title }}</a>
+        </div>
+        <br />
+        <div>
+            <span class="author">{{ it.author }}</span> | 
+            <span class="time">{{ it.insertTime|datetime }}</span> | 
+            <span><a href="{{ it.url }}" target="_blank">view origin</a></span>
+            | 
+            <span class="action">
+                <a class="action_evernote" href="#">Send To Evernote</a>
+            </span> | 
             <span class="action">
                 <a class="action_kindle" href="#">Send to kindle</a>
             </span>
-        </p>
-        <p>原始地址:<a href="{{ it.url }}" target="_blank">{{ it.url }}</a></p>
+        </div>
+        <br />
     </div>
     {% endfor %}
+</div>
+<br/>
+<div class="pager">
+    <a href="#">NEWER</a>
+    <a href="#">OLDER</a>
 </div>
 {% endblock content %}
 {% block footer %}

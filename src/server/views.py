@@ -11,6 +11,10 @@ from models import Page
 TEMPLATE_DIR = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(TEMPLATE_DIR))
 
+def datetime(value, format='%Y-%m-%d %H:%M'):
+    return value.strftime(format)
+jinja_env.filters['datetime'] = datetime
+
 class BaseHandler(webapp2.RequestHandler):
     """ define template method, use jinja2 """
 
@@ -99,7 +103,7 @@ class SendDirectHandler(SendHandler):
         #send to kindle
         if bSendIt: 
             mail = self.request.get('tMail')
-            self.sendIt('convert', mail, p)
+            self.sendIt('Convert', mail, p)
 
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write('{ successed:true, id:%s }' % p.key().id())
