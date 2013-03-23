@@ -105,6 +105,7 @@ class SendDirectHandler(SendHandler):
             mail = self.request.get('tMail')
             self.sendIt('Convert', mail, p)
 
-        self.response.headers['Content-Type'] = 'application/json'
-        self.response.out.write('{ successed:true, id:%s }' % p.key().id())
+        return webapp2.redirect('/')
+        #self.response.headers['Content-Type'] = 'application/json'
+        #self.response.out.write('{ successed:true, id:%s }' % p.key().id())
 
