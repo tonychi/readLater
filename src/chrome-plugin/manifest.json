@@ -1,7 +1,25 @@
 {
 	"name": "Send2Kindle",
-	"description": "Send to Kindle",
 	"version": "0.1",
-	"background_page": "background.html",
-	"permissions": [ "tabs", "notifications" ]
+    "mainfest_version": 2,
+
+	"description": "Send to Kindle",
+
+    "options_page": "options.html"，
+	"background": {
+        "page": "background.html"
+    },
+    "content_scripts": [
+        {
+            "matches": [ "*://getpocket.com/a/queue/list/*" ],
+            "js": [ "content_list.js" ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [ "*://getpocket.com/a/read/*" ],
+            "js": [ "content_read.js" ],
+            "run_at": "document_end"
+        }
+    ], 
+	"permissions": [ "http://*/*", "https://*/*", "tabs", "notifications" ]
 }
