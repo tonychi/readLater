@@ -6,33 +6,39 @@
     <p><a href="/save">Add new page</a></p>
 </div>
 <div class="list">
-    {% for it in items %}
-    <div class="item">
-        <div>
-            <a href="/view/{{ it.key().id() }}">{{ it.title }}</a>
+    {% if items %}
+        {% for it in items %}
+        <div class="item">
+            <div>
+                <a href="/view/{{ it.key().id() }}">{{ it.title }}</a>
+            </div>
+            <br />
+            <div>
+                <span class="author">{{ it.author }}</span> | 
+                <span class="time">{{ it.insertTime|datetime }}</span> | 
+                <span><a href="{{ it.url }}" target="_blank">view origin</a></span> | 
+                <span><a href="/delete/{{ it.key().id() }}">Delete</a></span> | 
+                <span class="action">
+                    <a class="action_evernote" href="#" alt="Send to Evernote">Evernote</a>
+                </span> | 
+                <span class="action">
+                    <a class="action_kindle" href="#" alt="Send to Kindle">Kindle</a>
+                </span>
+            </div>
+            <br />
         </div>
-        <br />
-        <div>
-            <span class="author">{{ it.author }}</span> | 
-            <span class="time">{{ it.insertTime|datetime }}</span> | 
-            <span><a href="{{ it.url }}" target="_blank">view origin</a></span>
-            | 
-            <span class="action">
-                <a class="action_evernote" href="#">Send To Evernote</a>
-            </span> | 
-            <span class="action">
-                <a class="action_kindle" href="#">Send to kindle</a>
-            </span>
-        </div>
-        <br />
-    </div>
-    {% endfor %}
+        {% endfor %}
+    {% else %}
+        <p>No page in list!</p>
+    {% endif %}
 </div>
+<!--
 <br/>
 <div class="pager">
     <a href="#">NEWER</a>
     <a href="#">OLDER</a>
 </div>
+-->
 {% endblock content %}
 {% block footer %}
 {% endblock footer %}
