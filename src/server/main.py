@@ -9,7 +9,7 @@ app = webapp2.WSGIApplication([
     ('/view/([\d]+)', views.ViewHandler),
     ('/delete/([\d]+)', views.DeleteHandler),
     ('/send/([\d]+)', views.SendHandler),
-    ('/save', views.SendDirectHandler)
+    ('/save', views.SendDirectHandler),
     ('/api/save', views.SendDirectHandler)
 ], debug=True)
 
