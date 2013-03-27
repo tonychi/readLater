@@ -15,43 +15,50 @@ chrome.runtime.onInstalled.addListener(
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, response){
-        console.log(sender.tab ? sender.tab.url: 'extension');
-        console.log(request.items.length);
+
+        if(request.notify){
+            notify(request.notify.message, request.notify.title, 
+                request.notify.interval);
+            response({ success: true });
+            return;
+        }
 
         var _count = count = request.items.length,
             error_count = 0;
 
-        function _cb(c, ec){
+        function _cb(c, ec, args){
             count +=c;
             error_count += ec;
 
+            if(c == -1) {
+                notify('Success! ' + args.tTitle); 
+            } else {
+                notify('Faild! ' + args.tTitle); 
+            }
+            /*
+
             if(_count == 1) {
-                notify('Add ' + (error_count == 0 ? 'success' : 'fail') + ' !'); 
+                notify(args.tTitle + ', Add ' + (error_count == 0 ? 'success' : 'fail') + ' !'); 
                 return;
             }
             if(count == 0){
                 //response({ success: error_count == 0 });
                 if(error_count ==0)
-                    notify('add success!, count: ' + _count);
+                    notify('Add completed!, count: ' + _count);
                 else
-                    notify('add completed!, total: ' + _count + 
+                    notify('Add completed!, total: ' + _count + 
                            ', success: ' + count + ', fail: ' + error_count);
                 return;
-            }
-        }
-
-        function notify(msg){
-            var w = webkitNotifications.createNotification(null, 'Info', msg);
-            w.show();
+            }*/
         }
 
         for(var i = 0; i < request.items.length; i++){
             var it = request.items[i];
-            _sync_to_server(it, function(flag){
+            _sync_to_server(it, function(flag, args){
                 if(flag)
-                    _cb(-1, 0);
+                    _cb(-1, 0, args);
                 else
-                    _cb(0, -1);
+                    _cb(0, -1, args);
             });
         }
     });
@@ -63,11 +70,10 @@ function _sync_to_server(args, cb){
         dataType: 'json',
         data: args,
         success: function(r, s, b){
-            cb(r.success);
+            cb(r.success, args);
         },
         error: function(e,a,b){
-            cb(false);
+            cb(false, args);
         }
     });
 }
-
