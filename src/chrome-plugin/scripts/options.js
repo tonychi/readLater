@@ -9,8 +9,8 @@
 $(document).ready(function(){
     var settings = chrome.extension.getBackgroundPage().settings;
     var serviceUrl = settings.getServiceUrl();
-    $('tServiceUrl').val(serviceUrl);
+    $('#tServiceUrl').val(serviceUrl);
     $('#bSave').click(function(){
-        settings.setServiceUrl($('tServiceUrl').val());
+        settings.setServiceUrl($('#tServiceUrl').val());
     });
 });
