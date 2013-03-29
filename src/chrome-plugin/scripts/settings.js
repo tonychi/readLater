@@ -8,7 +8,7 @@
 
 var settings = {
     init: function(){
-        this.setServiceUrl('http://localhost:8080/api/save');
+        this.setServiceUrl('http://localhost:8080/api/item');
     },
     getServiceUrl: function(){
         return localStorage['__service_url'];
