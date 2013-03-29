@@ -25,6 +25,15 @@ handlers:
   static_files: static/images/\1
   upload: static/images/(.*\.(gif|png|jpg))
 
+- url: /cron/.*
+  script: cron.app
+
+- url: /work/.*
+  script: work.app
+
+- url: /api/.*
+  script: api.app
+
 - url: .*
   script: main.app
 

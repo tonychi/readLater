@@ -11,3 +11,12 @@ class Page(db.Model):
     tags = db.StringListProperty()
     insertTime = db.DateTimeProperty(auto_now_add=True)
 
+    @classmethod
+    def delete_by_id(cls, _id):
+        it = Page.get_by_id(_id);
+        if it:
+            it.delete()
+
+    # end method
+
+# end class
