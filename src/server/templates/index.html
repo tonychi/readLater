@@ -17,12 +17,14 @@
                 <span class="author">{{ it.author }}</span> | 
                 <span class="time">{{ it.insertTime|datetime }}</span> | 
                 <span><a href="{{ it.url }}" target="_blank">view origin</a></span> | 
+                <span><a href="/save/{{ it.key().id() }}">Edit</a></span> | 
                 <span><a href="/delete/{{ it.key().id() }}">Delete</a></span> | 
                 <span class="action">
-                    <a class="action_evernote" href="#" alt="Send to Evernote">Evernote</a>
+                    <a id="action_evernote" href="#" alt="Send to Evernote">Evernote</a>
                 </span> | 
                 <span class="action">
-                    <a class="action_kindle" href="#" alt="Send to Kindle">Kindle</a>
+                    <a id="action_kindle" href="javascript:void(0);" data-id="{{
+                        it.key().id() }}" alt="Send to Kindle">Kindle</a>
                 </span>
             </div>
             <br />
@@ -41,4 +43,7 @@
 -->
 {% endblock content %}
 {% block footer %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"
+    type="text/javascript"></script>
+<script src="/scripts/send.js" type="text/javascript"></script>
 {% endblock footer %}

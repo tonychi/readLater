@@ -14,8 +14,7 @@ TODO: 定时发送所有订阅
 TODO: 手动批量发送多页（选择多个链接，用户可以输入文件名）
 
 TODO: List模糊查询，分页，**Tag查询
-TODO: **单页内的删除链接
-TODO: **编辑链接（单页，列表）
+--TODO: **单页(以及列表）内的Action: 编辑、删除、Origin、Share(Evernote, Kindle)
 
 TODO: **整体风格，样式表统一
 TODO: 登录，权限控制
