@@ -37,11 +37,13 @@ class DeleteHandler(common.BaseHandler):
 class SendHandler(common.BaseHandler):
     """ send already exist item """
 
-    def post(self, pid):
-        itId = int(pid)
-        p = Page.get_by_id(itId)
+    def post(self, title, pid):
+        """ add task to mail queue """
 
-        add_task_sendmail(p.key().id())
+        user = 1
+        t = title if title else 'NEWS'
+
+        add_task_sendmail(user, t, pid)
 
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write('{ success:True, id:%s }' % p.key().id())

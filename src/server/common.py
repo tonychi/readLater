@@ -37,7 +37,7 @@ def new_queue_name(queue, count=0):
     else:
         return "%s-%s" % (queue, random.randint(0, count))
 
-def add_task_sendmail(user, pids):
+def add_task_sendmail(user, title, pids):
     """
     添加发送邮件任务，只传入Pageid, UserId.
     任务自己来处理邮件内容构建, 邮件接收人的信息通过UserInfo获得.
