@@ -29,50 +29,32 @@ class BaseHandler(webapp2.RequestHandler):
         """ direct wirte to out stream """
         self.response.out.write(jinja_template(view, data))
 
-def sendMail(subj, content, toAddr, page):
-    """
-    extend method: send e-mail 
-    """
-
-    mail.send_mail(sender = mail_sender,
-              to = user.kindle_email,
-              subject = "Convert",
-              body = "deliver from ReadLater, by tonychi",
-              attachments=[("%s.html" % title, content)])
-
-    html = jinja_template('view.html', { 'title': page.title, 'item': page })
-    filename = page.title + '.html'
-
-    msg = EmailMessage(sender="qiwei219@gmail.com", subject=subj, to=toAddr);
-    msg.attachments = [(filename, html)]
-    msg.send()
-
 def new_queue_name(queue, count=0):
-    """docstring for get_queue_name"""
+    """get queue name, 支持随机分配队列算法"""
 
     if count <= 0:
         return queue
     else:
         return "%s-%s" % (queue, random.randint(0, count))
 
-def add_task_sendmail(user, pid):
+def add_task_sendmail(user, pids):
     """
     添加发送邮件任务，只传入Pageid, UserId.
     任务自己来处理邮件内容构建, 邮件接收人的信息通过UserInfo获得.
     """
 
-    taskqueue.add(url='/work/mail', 
-            queue_name = new_queue_name("mail-queue"),
-            method = 'GET',
-            params = { 'user': user, 'pid': pid })
+    taskqueue.add(url='/work/mail', \
+            queue_name = new_queue_name("mail-queue"), \
+            method = 'GET', \
+            params = { 'user': user, 'title': title, 'pids': pid })
 
 def add_task_fetchfeed(feed_url):
     """
     添加检查Feed更新的任务，传入Feedid。
     """
 
-    taskqueue.add(url='/work/feed', 
-            queue_name = new_queue_name("feed-fetch-queue"),
-            method = 'GET',
+    taskqueue.add(url='/work/feed', \
+            queue_name = new_queue_name("feed-fetch-queue"), \
+            method = 'GET', \
             params = { 'feed_url': feed_url })
 
