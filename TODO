@@ -6,12 +6,12 @@ TODO: 为API接口增加认证功能
 TODO: 使用WTForms组件优化现有Form参数提取的过程
 TODO: 增加Form输入的认证
 
-TODO: **内容生成功能，简单的单HTML文件
+--TODO: **内容生成功能，简单的单HTML文件
 TODO: 自定义目录结构（考虑现有的标记语言），引用页面，封皮，标题，单页模板等
 
 TODO: Feed抓取功能
 TODO: 定时发送所有订阅
-TODO: 手动批量发送多页（选择多个链接，用户可以输入文件名）
+--TODO: 手动批量发送多页（选择多个链接，用户可以输入文件名）
 
 TODO: List模糊查询，分页，**Tag查询
 --TODO: **单页(以及列表）内的Action: 编辑、删除、Origin、Share(Evernote, Kindle)
