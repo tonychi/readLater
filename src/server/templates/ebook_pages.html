@@ -4,25 +4,21 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
     <title>{{ title }}</title>
     <style type="text/css">
-        body { font-size: 1.1em; margin:0 5px; }
-        h1 { font-size:4em; font-weight:bold; }
-        h2 { font-size: 1.2em; font-weight: bold; margin:0; }
+        body { font-size: 1.1em; margin: 0 5px; }
         a { color: inherit; text-decoration: inherit; cursor: default }
-        a[href] { color: blue; text-decoration: underline; cursor: pointer }
-        p { text-indent:1.5em; line-height:1.3em; margin-top:0; margin-bottom:0; }
+        p { text-indent:1.5em; line-height: 1.12em; margin:0; }
 
         .italic { font-style: italic }
         .section_list{ page-break-before: always; }
 
-        #title { margin: 15px 0; }
+        #title { margin: 30px 0; }
         #cover { text-align: center; }
         #toc { page-break-before: always; }
         #content { page-break-before: always; }
 
         .article { }
-        .article-title { line-height:1.5em; page-break-before: always; }
+        .article-title { margin-bottom: 15px; page-break-before: always; }
         .article-info { font-size: 1em; }
-        .article-content { }
     </style>
     <guide>
         <reference type="start" title="start" href="#content"></reference>
@@ -33,11 +29,12 @@
 <body>
     <div id="cover">
         <h1 id="title">{{ title }}</h1>
-        <p>By READ LATER & Tony Chi (qiwei219@gmail.com)</p>
-        <p>{{ createTime|datetime }} </p>
+        <p>此电子文档由 Tony Chi 收集整理</p>
+        <p>版权归原作者所有</p>
+        <p>制作时间:{{ createTime|datetime }} </p>
     </div>
     <div id="toc">
-        <h2>Table Of Contents:</h2> 
+        <h2>目录:</h2> 
         <ol> 
             {% for page in pages %}
             <li><a href="#article_{{ page['idx'] }}">{{ page['title'] }}</a></li>
@@ -48,15 +45,19 @@
         {% for page in pages %}
         <div id="article_{{ page['idx'] }}" class="article">
             <h2 class="article-title">{{ page['title'] }}</h2>
-            <hr/>
             <div class="article-info">
                 <span class="italic">{{ page['author'] }}</span> | 
-                <span class="italic"><a href="{{ page['url'] }}">ORIGINAL PAGE</a></span> | 
+                <span class="italic">{{ page['time'] | datetime }}</span> | 
                 <span class="italic">{{ page['tags'] }}</span>
             </div>
             <hr />
             <div class="article-content">
                 {{ page['content'] }}
+            </div>
+            <hr />
+            <div>
+                <p>原始地址:</p>
+                <p><a href="{{ page['url'] }}">{{ page['url'] }}</a></p>
             </div>
         </div>
         {% endfor %}

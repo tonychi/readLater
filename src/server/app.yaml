@@ -1,5 +1,5 @@
-application: readlater
-version: 1
+application: mypocket-tonychi
+version: 2
 runtime: python27
 api_version: 1
 threadsafe: true
@@ -27,9 +27,11 @@ handlers:
 
 - url: /cron/.*
   script: cron.app
+  login: admin
 
 - url: /work/.*
   script: work.app
+  login: admin
 
 - url: /api/.*
   script: api.app

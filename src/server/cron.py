@@ -18,6 +18,9 @@ class FeedCronHandler(webapp2.RequestHandler):
         筛选feed时，首先按最后抓取时间升序排列，取前20个。
         """
 
+        pass
+
+        """
         # query top 20 feed
         feed = (1,2,3);
 
@@ -26,6 +29,7 @@ class FeedCronHandler(webapp2.RequestHandler):
             add_task_fetchfeed(fit.url)
 
             # update lasted fetch time
+        """
 
         # end for
 

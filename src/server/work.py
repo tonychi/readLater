@@ -37,8 +37,9 @@ class MailWorkHandler(webapp2.RequestHandler):
                     'idx': idx, 
                     'title': tmp_page.title, 
                     'author': tmp_page.author, 
+                    'time': tmp_page.insertTime,
                     'url': tmp_page.url, 
-                    'tags': ','.join(tmp_page.tags), 
+                    'tags': ", ".join(tmp_page.tags), 
                     'content': tmp_page.content 
                 }
                 pages.append(tmp)
