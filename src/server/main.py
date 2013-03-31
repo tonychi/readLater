@@ -33,20 +33,23 @@ class DeleteHandler(common.BaseHandler):
         Page.delete_by_id(itId)
         return webapp2.redirect('/')
 
-# /send/([\d]+)
+# /send/
 class SendHandler(common.BaseHandler):
     """ send already exist item """
 
-    def post(self, title, pid):
+    def post(self):
         """ add task to mail queue """
+
+        title = self.request.get('title')
+        pid = self.request.get('pid')
 
         user = 1
         t = title if title else 'NEWS'
 
-        add_task_sendmail(user, t, pid)
+        common.add_task_sendmail(user, t, pid)
 
         self.response.headers['Content-Type'] = 'application/json'
-        self.response.out.write('{ success:True, id:%s }' % p.key().id())
+        self.response.out.write('{ "success": True }')
 
 # /save
 class SendDirectHandler(common.BaseHandler):
@@ -73,7 +76,7 @@ class SendDirectHandler(common.BaseHandler):
 
         #send to kindle
         if bSendIt: 
-            add_task_sendmail(p.key().id());
+            common.add_task_sendmail(p.key().id());
 
         return webapp2.redirect('/')
 
@@ -82,7 +85,7 @@ app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/view/([\d]+)', ViewHandler),
     ('/delete/([\d]+)', DeleteHandler),
-    ('/send/([\d]+)', SendHandler),
+    ('/send', SendHandler),
     ('/save', SendDirectHandler),
 ], debug=True)
 

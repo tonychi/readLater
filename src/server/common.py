@@ -4,6 +4,7 @@
 import os
 import webapp2
 import jinja2
+from google.appengine.api import taskqueue
 from models import Page
 
 TEMPLATE_DIR = os.path.join(os.path.dirname(__file__), 'templates')
@@ -46,7 +47,7 @@ def add_task_sendmail(user, title, pids):
     taskqueue.add(url='/work/mail', \
             queue_name = new_queue_name("mail-queue"), \
             method = 'GET', \
-            params = { 'user': user, 'title': title, 'pids': pid })
+            params = { 'user': user, 'title': title, 'pids': pids })
 
 def add_task_fetchfeed(feed_url):
     """

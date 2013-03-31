@@ -2,7 +2,8 @@
 # -*- coding=utf-8 -*-
 
 import webapp2
-from common import sendMail
+from models import Page
+from common import add_task_sendmail
 
 class ItemHandler(webapp2.RequestHandler):
     """
@@ -36,7 +37,7 @@ class ItemHandler(webapp2.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write('{ "success":true, "id":%s }' % p.key().id())
 
-class ItemSignleHandler(webapp2.RequestHandler)
+class ItemSignleHandler(webapp2.RequestHandler):
     """
     Item, 处理: 
     - 查询指定<key>的Item.
@@ -56,7 +57,7 @@ class ItemSignleHandler(webapp2.RequestHandler)
         """
         pass
 
-    def delete(self, key)
+    def delete(self, key):
         """
         /api/item/<key>, DELETE, delete specifed item with given <key>
         """

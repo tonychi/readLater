@@ -3,8 +3,12 @@
 
 import webapp2
 from google.appengine.api import mail
+#from google.appengine.api import users
+#from google.appengine.api import memcache
+#from google.appengine.api import urlfetch
+from datetime import datetime, timedelta
 from models import Page
-from datetime import datetime
+import common
 
 TIMEZONE = 8
 
@@ -13,11 +17,14 @@ class MailWorkHandler(webapp2.RequestHandler):
     MailWorkHandler, send mail.
     """
 
-    def get(self, user, title, pids):
+    def get(self):
         """ user: 用户id
         title: 文件名，文件内容标题
         pids: 文章列表
         """
+        user, title, pids = self.request.get('user'), \
+                self.request.get('title'), \
+                self.request.get('pids')
 
         pages, idx = [], 1
 
@@ -26,31 +33,33 @@ class MailWorkHandler(webapp2.RequestHandler):
         if tmp_pids:
             for it in tmp_pids:
                 tmp_page = Page.get_by_id(int(it))
-                tmp = { \
-                        'idx': idx, \
-                        'title': p.title, \
-                        'author': p.author, \
-                        'url': p.url, \
-                        'tags': ','.join(p.tags), \
-                        'content': p.content \
-                    }
+                tmp = { 
+                    'idx': idx, 
+                    'title': tmp_page.title, 
+                    'author': tmp_page.author, 
+                    'url': tmp_page.url, 
+                    'tags': ','.join(tmp_page.tags), 
+                    'content': tmp_page.content 
+                }
                 pages.append(tmp)
                 idx += 1
             # end for
         # end if
 
-        tmp_content = jinja_template('ebook_pages.html', { \ 
-                    'title': title, \
-                    'createTime': datetime.utcnow() + timedelta(hours=TIMEZONE)) \
-                    'pages': pages \
-                })
+        tmp_content = common.jinja_template('ebook_pages.html', { 
+                'title': title, 
+                'createTime': datetime.utcnow() + timedelta(hours=TIMEZONE),
+                'pages': pages 
+            })
 
+        sender_addr = 'Tony <qiwei219@gmail.com>'
         user_addr = 'qiwei219_72@kindle.com'
 
-        mail.send_mail(to = user_addr, \
+        mail.send_mail(sender = sender_addr, \
+            to = user_addr, \
             subject = 'Convert', \
             body = "deliver from READ LATER, By Tony Chi", \
-            attachments=[("%s.html" % .title, tmp_content)])
+            attachments=[("%s.html" % title, tmp_content)])
 
     # end get
 

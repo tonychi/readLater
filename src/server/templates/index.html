@@ -1,24 +1,33 @@
 {% extends "base.html" %}
 {% block header %}
+<style type="text/css">
+    a { color: #000; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .list { margin: 10px 0; }
+    .item { border-bottom: 1px dotted; margin: 10px 0; padding: 5px 0; }
+    .item-title { margin: 5px 0; }
+    .item-title a { color: blue; }
+    .item-info { font-size: 12px;  padding-left: 25px;}
+</style>
 {% endblock header %}
 {% block content %}
 <div class="toolbar">
-    <p><a href="/save">Add new page</a></p>
+    <p><a href="/save">ADD</a> | <a id="sendToKindle" href="javascript:void(0)">Kindle</a></p>
 </div>
 <div class="list">
     {% if items %}
         {% for it in items %}
         <div class="item">
-            <div>
+            <div class="item-title">
+                <input name="ckPage" type="checkbox" value="{{ it.key().id() }}" />
                 <a href="/view/{{ it.key().id() }}">{{ it.title }}</a>
             </div>
-            <br />
-            <div>
+            <div class="item-info">
                 <span class="author">{{ it.author }}</span> | 
                 <span class="time">{{ it.insertTime|datetime }}</span> | 
-                <span><a href="{{ it.url }}" target="_blank">view origin</a></span> | 
-                <span><a href="/save/{{ it.key().id() }}">Edit</a></span> | 
-                <span><a href="/delete/{{ it.key().id() }}">Delete</a></span> | 
+                <span><a href="{{ it.url }}" target="_blank">ORIGINAL PAGE</a></span> | 
+                <span><a href="/save/{{ it.key().id() }}">EDIT</a></span> | 
+                <span><a href="/delete/{{ it.key().id() }}">DELETE</a></span> | 
                 <span class="action">
                     <a id="action_evernote" href="#" alt="Send to Evernote">Evernote</a>
                 </span> | 
@@ -27,7 +36,6 @@
                         it.key().id() }}" alt="Send to Kindle">Kindle</a>
                 </span>
             </div>
-            <br />
         </div>
         {% endfor %}
     {% else %}

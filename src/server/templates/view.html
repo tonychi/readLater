@@ -3,16 +3,16 @@
 {% endblock header %}
 {% block content %}
 <div>
-    <p>{{ item.author }} | {{ item.insertTime|datetime }} | {{ item.tags }}</p>
+    <p>{{ item.author }} | {{ item.insertTime|datetime }} | {{ ", ".join(item.tags) }}</p>
 </div>
 <div>
     <p>
-        <span><a href="{{ it.url }}" target="_blank">view origin</a></span> | 
-        <span><a href="/save/{{ it.key().id() }}">Edit</a></span> | 
-        <span><a href="/delete/{{ it.key().id() }}">Delete</a></span> | 
+        <span><a href="{{ item.url }}" target="_blank">ORIGINAL PAGE</a></span> | 
+        <span><a href="/save/{{ item.key().id() }}">EDIT</a></span> | 
+        <span><a href="/delete/{{ item.key().id() }}">DELETE</a></span> | 
         <span class="action">
             <a id="action_kindle" href="javascript:void(0);" alt="Send to Kindle">Kindle</a>
-        </span>
+        </span> | 
         <span class="action">
             <a id="action_evernote" href="javascript:void(0);" alt="Send to
                 Evernote">Evernote</a>
@@ -27,4 +27,7 @@
 </div>
 {% endblock content %}
 {% block footer %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"
+    type="text/javascript"></script>
+<script src="/scripts/send.js" type="text/javascript"></script>
 {% endblock footer %}

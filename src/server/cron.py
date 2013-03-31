@@ -2,7 +2,7 @@
 # -*- coding=utf-8 -*-
 
 import webapp2
-from common import add_task_fetchfeed
+from common import add_task_fetchfeed, add_task_sendmail
 
 class FeedCronHandler(webapp2.RequestHandler):
     """

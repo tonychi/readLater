@@ -41,7 +41,7 @@
         <ol> 
             {% for page in pages %}
             <li><a href="#article_{{ page['idx'] }}">{{ page['title'] }}</a></li>
-            {% end %}
+            {% endfor %}
         </ol> 
     </div>
     <div id="content">
@@ -59,7 +59,7 @@
                 {{ page['content'] }}
             </div>
         </div>
-        {% end %}
+        {% endfor %}
     </div>
 </body>
 </html>

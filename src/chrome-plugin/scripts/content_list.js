@@ -87,7 +87,8 @@
                 selected.push(data);
 
                 var tags = [];
-                $('.hasTags a', $(this)).each(function(){
+                $('.hasTags a:not(.edit)', $(this)).each(function(){
+                //$('.hasTags a:not(.edit)', $('#i39759903'))
                     tags.push($(this).html());
                 });
 
