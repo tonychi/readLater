@@ -13,7 +13,7 @@ class MainHandler(common.BaseHandler):
     def get(self):
         return self.redirect('/list/1')
 
-PAGESIZE = 3 
+PAGESIZE = 10 
 # /list/([\d]+)
 class ListHandler(common.BaseHandler):
 

@@ -13,7 +13,8 @@ TODO: Feed抓取功能
 TODO: 定时发送所有订阅
 --TODO: 手动批量发送多页（选择多个链接，用户可以输入文件名）
 
-TODO: List模糊查询，分页，**Tag查询
+--TODO: List模糊查询，分页，
+--TODO: **Tag查询
 --TODO: **单页(以及列表）内的Action: 编辑、删除、Origin、Share(Evernote, Kindle)
 
 TODO: **整体风格，样式表统一
