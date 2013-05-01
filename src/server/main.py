@@ -4,16 +4,34 @@
 import webapp2
 import common
 from models import Page 
+import logging
 
 # /
 class MainHandler(common.BaseHandler):
     """ all pages using pageit """
 
     def get(self):
+        return self.redirect('/list/1')
+
+PAGESIZE = 3 
+# /list/([\d]+)
+class ListHandler(common.BaseHandler):
+
+    def get(self, pageindex):
+        logging.info(pageindex)
+        pi = 1 if int(pageindex) < 1 else int(pageindex)
+        offset = (pi - 1) * PAGESIZE
+        logging.info(offset)
+
         q = Page.all();
         q.order('-insertTime')
-        its = q.fetch(10, 0)
-        self.render_template('index.html', { 'title': 'List', 'items': its })
+
+        total = q.count()
+        its = q.fetch(PAGESIZE, offset)
+
+        self.render_template('index.html', { 
+            'title': 'List', 'items': its, 'total': total, 
+            'pageindex': pi, 'pagesize': PAGESIZE })
 
 # /view/([\d]+)
 class ViewHandler(common.BaseHandler):
@@ -31,7 +49,7 @@ class DeleteHandler(common.BaseHandler):
     def get(self, pid):
         itId = int(pid)
         Page.delete_by_id(itId)
-        return webapp2.redirect('/')
+        return self.redirect('/list/1')
 
 # /send/
 class SendHandler(common.BaseHandler):
@@ -78,11 +96,12 @@ class SendDirectHandler(common.BaseHandler):
         if bSendIt: 
             common.add_task_sendmail(p.key().id());
 
-        return webapp2.redirect('/')
+        return self.redirect('/list/1')
 
 # create app, define url route.
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
+    ('/list/([\d]+)', ListHandler),
     ('/view/([\d]+)', ViewHandler),
     ('/delete/([\d]+)', DeleteHandler),
     ('/send', SendHandler),

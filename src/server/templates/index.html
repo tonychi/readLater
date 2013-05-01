@@ -42,13 +42,15 @@
         <p>No page in list!</p>
     {% endif %}
 </div>
-<!--
 <br/>
 <div class="pager">
-    <a href="#">NEWER</a>
-    <a href="#">OLDER</a>
+    {% if pageindex > 1 %}
+    <a href="/list/{{ pageindex - 1 }}">&lt;&lt;向前</a>
+    {% endif %}
+    {% if pageindex * pagesize < total %}
+    <a href="/list/{{ pageindex + 1 }}">向后&gt;&gt;</a>
+    {% endif %}
 </div>
--->
 {% endblock content %}
 {% block footer %}
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"
