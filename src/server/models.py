@@ -7,15 +7,18 @@ class Feed(db.Model):
     title = db.stringProperty()
     url = db.Linkproperty()
     interval = db.IntegerProperty(default=60*60*24)  # 1day
+    lastedPublishedTime = db.DateTimeProperty()
     fetchTime = db.DateTimeProperty(auto_now_add=True)
 
-    @classmethod
-    def allowFetch(cls, _id, time):
+    def is_allow_fetch(self, time):
         ''' 检查指定Feed的最后检查时间是否大于time+Feed.interval‘'''
-        it = Feed.get_by_id(_id)
-        return True if it and (it.fetchTime - time).seconds > it.interval else False
-    # end method
-# end class
+        return True if (self.fetchTime - time).seconds >= self.interval else False
+
+    @classmethod
+    def get_by_interval(cls, value):
+        q = Feed.all()
+        q.filter('interval=', value)
+        return q.fetch(limit=100)
 
 class Entry(db.Model):
     url = db.LinkProperty()
@@ -23,6 +26,7 @@ class Entry(db.Model):
     author = db.StringProperty()
     content = db.TextProperty()
     tags = db.StringListProperty()
+    publishedTime = db.DateTimeProperty()
     insertTime = db.DateTimeProperty(auto_now_add=True)
 
     @classmethod
@@ -31,5 +35,4 @@ class Entry(db.Model):
         it = Entry.get_by_id(_id)
         if it:
             it.delete()
-    # end method
-# end class
+

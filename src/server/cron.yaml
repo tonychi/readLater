@@ -1,9 +1,13 @@
 cron:
-- description: fetch feed
-  url: /cron/feed
+- description: fetch feed every 1 hours
+  url: /cron/feed/3600
   schedule: every 1 hours
 
-- description: send new content, every 12 hours
-  url: /cron/mail
-  schedule: every 12 hours
+- description: fetch feed every 24 hours
+  url: /cron/feed/86400
+  schedule: every 24 hours
+
+#- description: send new content, every 12 hours
+#  url: /cron/mail
+#  schedule: every 12 hours
 

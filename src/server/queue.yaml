@@ -1,5 +1,50 @@
 queue:
-- name: feed-fetch-queue 
+- name: feed-fetch-queue-0
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+- name: feed-fetch-queue-1
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+- name: feed-fetch-queue-2
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+- name: feed-fetch-queue-3 
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+- name: feed-fetch-queue-4 
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+- name: feed-fetch-queue-5 
   rate: 10/s
   bucket_size: 10
   retry_parameters:

@@ -2,6 +2,7 @@
 # -*- coding=utf-8 -*-
 
 import webapp2
+from models import Feed
 from common import add_task_fetchfeed, add_task_sendmail
 
 class FeedCronHandler(webapp2.RequestHandler):
@@ -9,32 +10,19 @@ class FeedCronHandler(webapp2.RequestHandler):
     FeedCronHandler, 处理Feed抓取工作
     """
 
-    def get(self):
+    def get(self, time):
         """
         GET请求处理。
-        
         从当前用户的订阅列表内抓取一定数量的Feed，放入抓取队列内。
-
-        筛选feed时，首先按最后抓取时间升序排列，取前20个。
         """
+        feeds = Feed.get_by_interval(time)
 
-        pass
-
-        """
-        # query top 20 feed
-        feed = (1,2,3);
-
-        for fit in feed:
+        for fit in feeds:
             # add to task queue
             add_task_fetchfeed(fit.url)
-
-            # update lasted fetch time
-        """
-
         # end for
 
     # end get
-
 # end FeedCronHandler
 
 class MailCronHandler(webapp2.RequestHandler):
@@ -49,7 +37,7 @@ class MailCronHandler(webapp2.RequestHandler):
 # end MailCronHandler
 
 app = webapp2.WSGIApplication([
-    ('/cron/feed', FeedCronHandler),
+    ('/cron/feed/<time:\d+>', FeedCronHandler),
     ('/cron/mail', MailCronHandler)
 ], debug=True)
 

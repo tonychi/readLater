@@ -55,7 +55,7 @@ def add_task_fetchfeed(feed_url):
     """
 
     taskqueue.add(url='/work/feed', \
-            queue_name = new_queue_name("feed-fetch-queue"), \
+            queue_name = new_queue_name("feed-fetch-queue", 5), \
             method = 'GET', \
             params = { 'feed_url': feed_url })
 
