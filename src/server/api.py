@@ -2,7 +2,7 @@
 # -*- coding=utf-8 -*-
 
 import webapp2
-from models import Page
+from models import Entry
 from common import add_task_sendmail
 
 class ItemHandler(webapp2.RequestHandler):
@@ -14,8 +14,8 @@ class ItemHandler(webapp2.RequestHandler):
 
     def get(self):
         """
-        /api/item, GET, query, return first page
-        /api/item?offset=20, GET, query, return offset pages
+        /api/item, GET, query, return first entry 
+        /api/item?offset=20, GET, query, return offset entries 
         /api/item?qt=QueryTerm, GET, query, user query terms.
         """
         pass
@@ -26,7 +26,7 @@ class ItemHandler(webapp2.RequestHandler):
         表单字段： url, author, title, content
         """
 
-        p = Page()
+        p = Entry()
         p.url = self.request.get('tUrl')
         p.author = self.request.get('tAuthor')
         p.title = self.request.get('tTitle')

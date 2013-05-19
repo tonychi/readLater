@@ -3,7 +3,7 @@
 
 import webapp2
 import common
-from models import Page 
+from models import Entry 
 import logging
 
 # /
@@ -23,7 +23,7 @@ class ListHandler(common.BaseHandler):
         offset = (pi - 1) * PAGESIZE
         logging.info(offset)
 
-        q = Page.all();
+        q = Entry.all();
         q.order('-insertTime')
 
         total = q.count()
@@ -39,7 +39,7 @@ class ViewHandler(common.BaseHandler):
 
     def get(self, pid):
         itId = int(pid)
-        p = Page.get_by_id(itId)
+        p = Entry.get_by_id(itId)
         self.render_template('view.html', { 'title': p.title, 'item': p })
 
 # /delete/([\d]+)
@@ -48,7 +48,7 @@ class DeleteHandler(common.BaseHandler):
 
     def get(self, pid):
         itId = int(pid)
-        Page.delete_by_id(itId)
+        Entry.delete_by_id(itId)
         return self.redirect('/list/1')
 
 # /send/
@@ -84,7 +84,7 @@ class SendDirectHandler(common.BaseHandler):
         #表单字段： url, author, title, content, allow_sendto_kindle
         bSendIt = self.request.get('bSendIt')
 
-        p = Page()
+        p = Entry()
         p.url = self.request.get('tUrl')
         p.author = self.request.get('tAuthor')
         p.title = self.request.get('tTitle')

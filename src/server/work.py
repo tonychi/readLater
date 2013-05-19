@@ -7,7 +7,7 @@ from google.appengine.api import mail
 #from google.appengine.api import memcache
 #from google.appengine.api import urlfetch
 from datetime import datetime, timedelta
-from models import Page
+from models import Entry
 import common
 
 TIMEZONE = 8
@@ -32,7 +32,7 @@ class MailWorkHandler(webapp2.RequestHandler):
 
         if tmp_pids:
             for it in tmp_pids:
-                tmp_page = Page.get_by_id(int(it))
+                tmp_page = Entry.get_by_id(int(it))
                 tmp = { 
                     'idx': idx, 
                     'title': tmp_page.title, 
