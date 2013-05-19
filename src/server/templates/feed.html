@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block header %}
+<style type="text/css">
+    .list { margin: 10px 0; }
+</style>
+{% endblock header %}
+{% block content %}
+<div class="toolbar">
+    <p><a href="/feed/save">ADD</a></p>
+</div>
+<div class="list">
+    {% if items %}
+    <ul>
+        {% for it in items %}
+        <li> {{ it.title }} | {{ it.url }} </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p>No page in list!</p>
+    {% endif %}
+</div>
+<br/>
+{% endblock content %}
+{% block footer %}
+{% endblock footer %}

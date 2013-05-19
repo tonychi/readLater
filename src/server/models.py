@@ -4,8 +4,8 @@
 from google.appengine.ext import db
 
 class Feed(db.Model):
-    title = db.stringProperty()
-    url = db.Linkproperty()
+    title = db.StringProperty()
+    url = db.LinkProperty()
     interval = db.IntegerProperty(default=60*60*24)  # 1day
     lastedPublishedTime = db.DateTimeProperty()
     fetchTime = db.DateTimeProperty(auto_now_add=True)

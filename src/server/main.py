@@ -3,7 +3,7 @@
 
 import webapp2
 import common
-from models import Entry 
+from models import Entry, Feed
 import logging
 
 # /
@@ -30,7 +30,7 @@ class ListHandler(common.BaseHandler):
         its = q.fetch(PAGESIZE, offset)
 
         self.render_template('index.html', { 
-            'title': 'List', 'items': its, 'total': total, 
+            'title': 'Entry List', 'items': its, 'total': total, 
             'pageindex': pi, 'pagesize': PAGESIZE })
 
 # /view/([\d]+)
@@ -78,7 +78,7 @@ class SendDirectHandler(common.BaseHandler):
 
     def get(self):
         """ render send.html """
-        self.render_template('save.html', { 'title': 'Save' })
+        self.render_template('save.html', { 'title': 'New Entry' })
 
     def post(self):
         #表单字段： url, author, title, content, allow_sendto_kindle
@@ -98,6 +98,26 @@ class SendDirectHandler(common.BaseHandler):
 
         return self.redirect('/list/1')
 
+class FeedListHandler(common.BaseHandler):
+    def get(self):
+        q = Feed.all();
+        its = q.fetch(limit=100)
+
+        self.render_template('feed.html', { 'title': 'Feed List', 'items': its })
+
+class FeedSaveHandler(common.BaseHandler):
+    def get(self):
+        self.render_template('feed_save.html', { 'title': 'New Feed' })
+
+    def post(self):
+        #表单字段： url, author, title, content, allow_sendto_kindle
+        f = Feed()
+        f.url = self.request.get('tUrl')
+        f.title = self.request.get('tTitle')
+        f.put(); # save
+
+        return self.redirect('/feed')
+
 # create app, define url route.
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
@@ -106,5 +126,7 @@ app = webapp2.WSGIApplication([
     ('/delete/([\d]+)', DeleteHandler),
     ('/send', SendHandler),
     ('/save', SendDirectHandler),
+    ('/feed', FeedListHandler),
+    ('/feed/save', FeedSaveHandler),
 ], debug=True)
 

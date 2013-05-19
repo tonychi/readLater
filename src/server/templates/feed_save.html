@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block header %}
+{% endblock header %}
+{% block content %}
+<form id="save_form" action="/feed/save" method="POST" accept-charset="utf-8">
+	<p>
+		<label for="tTitle">Title:</label>
+		<input id="tTitle" name="tTitle" type="text" value="" placeholder="example title"/>
+	</p>
+	<p>
+		<label for="tUrl">Url:</label>
+		<input id="tUrl" name="tUrl" type="text" value="" placeholder="http://example.com/test.html"/>
+	</p>
+	<input id="bSubmit" name="bSubmit" type="submit" value="Save it!" />
+</form>
+{% endblock content %}
+{% block footer %}
+{% endblock footer %}
