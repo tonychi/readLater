@@ -6,6 +6,8 @@ import common
 from models import Entry, Feed
 import logging
 
+logging.getLogger().setLevel(logging.DEBUG)
+
 # /
 class MainHandler(common.BaseHandler):
     """ all pages using pageit """

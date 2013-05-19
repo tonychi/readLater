@@ -6,6 +6,8 @@ import logging
 from models import Feed
 from common import add_task_fetchfeed, add_task_sendmail
 
+logging.getLogger().setLevel(logging.DEBUG)
+
 class FeedCronHandler(webapp2.RequestHandler):
     """
     FeedCronHandler, 处理Feed抓取工作
@@ -16,13 +18,15 @@ class FeedCronHandler(webapp2.RequestHandler):
         GET请求处理。
         从当前用户的订阅列表内抓取一定数量的Feed，放入抓取队列内。
         """
-        feeds = Feed.get_by_interval(time)
+        logging.debug(time)
 
-        logging.debug('feed count: %d', feeds.count)
+        feeds = Feed.get_by_interval(int(time))
+
+        logging.debug('feed count: %s', len(feeds))
 
         for fit in feeds:
             # add to task queue
-            add_task_fetchfeed(fit.url)
+            add_task_fetchfeed(fit.key().id(), fit.url)
         # end for
 
     # end get

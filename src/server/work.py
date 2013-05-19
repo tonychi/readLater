@@ -11,6 +11,8 @@ from google.appengine.api import mail
 from datetime import datetime, timedelta
 from models import Entry, Feed
 
+logging.getLogger().setLevel(logging.DEBUG)
+
 TIMEZONE = 8
 
 class MailWorkHandler(webapp2.RequestHandler):
@@ -77,7 +79,7 @@ class FeedWorkHandler(webapp2.RequestHandler):
 
     def get(self):
 
-        feed_id, feed_url = self.request.get('feed_id'),
+        feed_id, feed_url = self.request.get('feed_id'), \
                 self.request.get('feed_url')
 
         url_result = urllib2.urlopen(feed_url)
@@ -91,19 +93,19 @@ class FeedWorkHandler(webapp2.RequestHandler):
         feed_update_time = feed_result.get('updated', datetime.utcnow)
         has_update = True 
 
-        f = Feed.get_by_id(feed_id)
-        if f.is_allow_fetch(time):
+        f = Feed.get_by_id(int(feed_id))
+        if f.is_allow_fetch(feed_update_time):
             for entry in feed_result.entries:
-                if entry.published_parsed <= f.lastedPublishedTime
-                    logging.info('no updated, id: %s, url: %s' feed_id,
+                if entry.published_parsed <= f.lastedPublishedTime:
+                    logging.info('no updated, id: %s, url: %s', feed_id,
                             feed_url)
                     has_update = False
                     break
 
                 e = Entry(title = entry.title,
                           url = entry.link,
-                          author entry.author,
-                          content = entry.content,
+                          author = entry.author,
+                          content = entry.content),
                           publishedTime = entry.published_parsed)
                 e.put()
                 logging.debug('fetch entry, url: %s', entry.link)

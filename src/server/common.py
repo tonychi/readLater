@@ -4,6 +4,7 @@
 import os
 import webapp2
 import jinja2
+import random
 from google.appengine.api import taskqueue
 from models import Entry
 
@@ -49,7 +50,7 @@ def add_task_sendmail(user, title, pids):
             method = 'GET', \
             params = { 'user': user, 'title': title, 'pids': pids })
 
-def add_task_fetchfeed(feed_url):
+def add_task_fetchfeed(feed_id, feed_url):
     """
     添加检查Feed更新的任务，传入Feedid。
     """
@@ -57,5 +58,5 @@ def add_task_fetchfeed(feed_url):
     taskqueue.add(url='/work/feed', \
             queue_name = new_queue_name("feed-fetch-queue", 5), \
             method = 'GET', \
-            params = { 'feed_url': feed_url })
+            params = { 'feed_id': feed_id, 'feed_url': feed_url })
 

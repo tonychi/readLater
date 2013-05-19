@@ -2,6 +2,7 @@
 # -*- coding=utf-8 -*-
 
 from google.appengine.ext import db
+from datetime import timedelta, time
 
 class Feed(db.Model):
     title = db.StringProperty()
@@ -10,14 +11,21 @@ class Feed(db.Model):
     lastedPublishedTime = db.DateTimeProperty()
     fetchTime = db.DateTimeProperty(auto_now_add=True)
 
-    def is_allow_fetch(self, time):
+    def is_allow_fetch(self, dt):
         ''' 检查指定Feed的最后检查时间是否大于time+Feed.interval‘'''
-        return True if (self.fetchTime - time).seconds >= self.interval else False
+        '''
+        t0 = self.fetchTime + timedelta(seconds=self.interval)
+        t1 = time.mktime(t0.timetuple()).time()
+        t2 = time.mktime(dt.timetuple()).time()
+        return True if t1 >= t2 else Flase
+        '''
+        return True
+        # return True if (self.fetchTime - time).seconds >= self.interval else False
 
     @classmethod
     def get_by_interval(cls, value):
         q = Feed.all()
-        q.filter('interval=', value)
+        q.filter('interval', value)
         return q.fetch(limit=100)
 
 class Entry(db.Model):
